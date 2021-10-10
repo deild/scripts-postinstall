@@ -2,4 +2,4 @@
 
 ## Raspberry Pi OS
 
-`curl -JLO https://raw.githubusercontent.com/deild/scripts-postinstall/main/raspberrypios-server-postinstall.sh`
+`curl -JLO https://github.com/deild/scripts-postinstall/raw/main/raspberrypios-server-postinstall.sh`

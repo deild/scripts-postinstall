@@ -5,7 +5,7 @@ cockpit=1
 # 0/1 : Disable firewalld
 disablefirewalld=0
 # List of additional software to install	
-addsoftwares="nmon htop vim"
+addsoftwares=(nmon htop vim)
 
 # check root
 if [[ $EUID -ne 0 ]]
@@ -18,13 +18,11 @@ fi
 # Update
 apt update && apt upgrade -y
 
-
 # Tools
-if [[ -n $addsoftwares ]]
+if [[ -n ${addsoftwares[*]} ]]
 then
-    apt install -y $addsoftwares
+    apt install -y "${addsoftwares[@]}"
 fi
-
 
 # Cockpit
 if [[ "$cockpit" -eq "1" ]]
