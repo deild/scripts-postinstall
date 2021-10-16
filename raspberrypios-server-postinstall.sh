@@ -28,7 +28,7 @@ fi
 if [[ "$cockpit" -eq "1" ]]
 then
     apt install -y cockpit
-    apt install -y cockpit-networkmanager cockpit-dashboard cockpit-system cockpit-storaged
+    apt install -y cockpit-networkmanager cockpit-dashboard cockpit-system cockpit-storaged cockpit-pcp cockpit-packagekit cockpit-docker
     systemctl enable cockpit.socket
     systemctl start cockpit.socket
     #firewall-cmd --add-service=cockpit --permanent
