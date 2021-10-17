@@ -1,9 +1,11 @@
 #!/bin/env bash
 
 # 0/1 : enable cockpit
-cockpit=1
+cockpit=0
 # List of additional software to install	
-addsoftwares=(vim tar git tmux)
+addsoftwares=(vim tar git tmux ncdu htop)
+# List of additional development software to install
+adddev=(rbenv)
 # 0/1 : Désactiver le parefeu firewalld
 disablefirewalld=0
 # enforcing/permissive/disabled : Statut de SELinux à activer
@@ -25,11 +27,22 @@ sed -e "s/SELINUX=.*/SELINUX=$selinux/" -i /etc/sysconfig/selinux
 # Upgrade
 dnf -y --nogpgcheck --refresh upgrade
 
+# Turn on EPEL repo
+yum -y install epel-release &&  yum repolist
 
 # Tools
 if [[ -n ${addsoftwares[*]} ]]
 then
 	dnf install --nogpgcheck -y "${addsoftwares[@]}"
+fi
+type -p tmux >/dev/null && curl -JLO https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux && mv tmux /usr/share/bash-completion/completions/tmux
+
+
+# Development
+if [[ -n ${adddev[*]} ]]
+then
+	dnf install --nogpgcheck -y "${adddev[@]}"
+	eval "$(rbenv init -)"
 fi
 
 
@@ -77,6 +90,8 @@ case $arch in
 esac
 echo "Add /usr/local/go/bin to the PATH environment variable"
 
+# add gems
+gem install timetrap
 
 
 echo "Preparation completed, it is recommended to restart!"

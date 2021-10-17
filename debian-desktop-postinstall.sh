@@ -1,13 +1,10 @@
 #!/bin/env bash
 
-# 0/1 : enable cockpit
-cockpit=1
 # List of additional software to install	
-addsoftwares=(vim tar git tmux ncdu htop rsync)
-# 0/1 : Désactiver le parefeu firewalld
-disablefirewalld=0
-# enforcing/permissive/disabled : Statut de SELinux à activer
-selinux=enforcing
+addsoftwares=(vim tar git tmux ncdu htop)
+# List of additional development software to install
+adddev=(rbenv)
+
 
 arch=$(uname -m)
 
@@ -19,42 +16,22 @@ then
 	exit;
 fi
 
-# SELinux
-sed -e "s/SELINUX=.*/SELINUX=$selinux/" -i /etc/sysconfig/selinux
-
 # Upgrade
-dnf -y --nogpgcheck --refresh upgrade
-
-# Turn on EPEL repo
-dnf -y install epel-release &&  dnf repolist
+apt update && apt -y upgrade
 
 # Tools
 if [[ -n ${addsoftwares[*]} ]]
 then
-	dnf install --nogpgcheck -y "${addsoftwares[@]}"
+	apt install -y "${addsoftwares[@]}"
 fi
 type -p tmux >/dev/null && curl -JLO https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux && mv tmux /usr/share/bash-completion/completions/tmux
 
 
-# Cockpit
-
-if [[ "$cockpit" -eq "1" ]]
+# Development
+if [[ -n ${adddev[*]} ]]
 then
-	dnf install --nogpgcheck -y cockpit
-	dnf install --nogpgcheck -y cockpit-networkmanager cockpit-selinux cockpit-dashboard cockpit-system cockpit-storaged
-	systemctl enable cockpit.socket
-	systemctl start cockpit.socket
-	firewall-cmd --add-service=cockpit --permanent
-	firewall-cmd --reload
-fi
-
-
-# Disable firewalld
-
-if [[ "$disablefirewalld" -eq "1" ]]
-then
-	systemctl stop firewalld
-	systemctl disable firewalld
+	apt install -y "${adddev[@]}"
+	eval "$(rbenv init -)"
 fi
 
 # install or update starship
@@ -79,5 +56,9 @@ case $arch in
 	*);;
 esac
 echo "Add /usr/local/go/bin to the PATH environment variable"
+
+# add gems
+gem install timetrap
+
 
 echo "Preparation completed, it is recommended to restart!"

@@ -5,7 +5,7 @@ cockpit=1
 # 0/1 : Disable firewalld
 disablefirewalld=0
 # List of additional software to install	
-addsoftwares=(nmon htop vim)
+addsoftwares=(nmon htop vim tmux ncdu rsync)
 
 # check root
 if [[ $EUID -ne 0 ]]
@@ -23,6 +23,9 @@ if [[ -n ${addsoftwares[*]} ]]
 then
     apt install -y "${addsoftwares[@]}"
 fi
+
+type -p tmux >/dev/null && curl -JLO https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux && mv tmux /usr/share/bash-completion/completions/tmux
+
 
 # Cockpit
 if [[ "$cockpit" -eq "1" ]]

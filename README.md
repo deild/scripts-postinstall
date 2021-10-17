@@ -18,6 +18,12 @@ curl -fSs https://github.com/deild/scripts-postinstall/raw/main/rockylinux-serve
 curl -fSs https://github.com/deild/scripts-postinstall/raw/main/rockylinux-desktop-postinstall.sh | bash
 ```
 
+## Debian Family Desktop 
+
+```sh
+curl -fSs https://github.com/deild/scripts-postinstall/raw/main/debian-desktop-postinstall.sh | bash
+```
+
 ## motd
 
-see [dynmotd](https://github.com/deild/dynmotd)
+See [dynmotd](https://github.com/deild/dynmotd)
