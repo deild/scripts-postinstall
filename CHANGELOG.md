@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- Fedora Workstation scripts
 - add rsync in Server scripts
 - Debian Family Desktop srcipts
 - add tmux bashcompletion

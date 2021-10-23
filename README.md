@@ -1,5 +1,10 @@
 # scripts-postinstall
 
+## Fedora Workstation 
+
+```sh
+curl -fSs https://github.com/deild/scripts-postinstall/raw/main/fedora-workstation-postinstall.sh | bash
+
 ## Raspberry Pi OS Server
 
 ```sh
