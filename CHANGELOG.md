@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- add vlc for workstation/desktop
+- add git-extras
+- use RPM Fusion for Fedora
 - Fedora Workstation scripts
 - add rsync in Server scripts
 - Debian Family Desktop srcipts
@@ -15,7 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - add htop in the list of additional software to install
 - add ncdu in the list of additional software to install
 - add EPEL repo to Rocky linux post-install
-- 
+
+### Fixed
+- tests to avoid double installation
+ 
 ### Changed
 - disable cockpit in desktop post-install
 

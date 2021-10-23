@@ -2,21 +2,20 @@
 set -o pipefail
 
 # List of additional software to install
-addsoftwares=(vim tar git tmux ncdu htop lshw vlc fira-code-fonts)
+addsoftwares=(vim tar git tmux ncdu htop lshw gnome-tweak-tool vlc)
 # List of additional development software to install
-adddev=(ShellCheck git-extras)
+adddev=(ShellCheck git-extras pass)
 # 0/1 : Désactiver le parefeu firewalld
 disablefirewalld=0
 # enforcing/permissive/disabled : Statut de SELinux à activer
 selinux=enforcing
 
 arch=$(uname -m)
-user="$1"
 
 # check root
 if [[ $EUID -ne 0 ]]; then
 	sudo chmod +x "$(dirname "$0")/$0"
-	sudo "$(dirname "$0")/$0" "$(id -nu)"
+	sudo "$(dirname "$0")/$0"
 	exit
 fi
 
@@ -32,11 +31,17 @@ fwupdmgr refresh --force
 fwupdmgr get-updates
 fwupdmgr update
 
+# Use RPM Fusion for Fedora
+dnf install "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+dnf install "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+
 # Tools
 if [[ -n ${addsoftwares[*]} ]]; then
 	dnf install --nogpgcheck -y "${addsoftwares[@]}"
 fi
-type -p tmux >/dev/null && curl -JLO https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux && mv tmux /usr/share/bash-completion/completions/tmux
+if [ -f /usr/share/bash-completion/completions/tmux ]; then
+	curl -JLO https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux && mv tmux /usr/share/bash-completion/completions/tmux
+fi
 
 # Development
 if [[ -n ${adddev[*]} ]]; then
@@ -44,15 +49,16 @@ if [[ -n ${adddev[*]} ]]; then
 fi
 
 # Git exstra and toolbelt
-git clone --depth 1 --single-branch --branch v1.7.0 https://github.com/nvie/git-toolbelt
-cp git-toolbelt/git-* /usr/local/bin
-rm -r git-toolbelt
+if [ ! -f /usr/local/bin/git-cleave ]; then
+	git clone --depth 1 --single-branch --branch v1.7.0 https://github.com/nvie/git-toolbelt > /dev/null
+	cp git-toolbelt/git-* /usr/local/bin
+	rm -r git-toolbelt
+fi
 # git clone --depth 1 --single-branch --branch 6.3.0 https://github.com/tj/git-extras
 # cd git-extras
 # make install
 # cd
 # rm -r git-extras
-
 
 # Ruby
 # if  ! type -p ruby > /dev/null ; then
@@ -75,7 +81,7 @@ if [[ "$disablefirewalld" -eq "1" ]]; then
 fi
 
 # install or update starship
-curl -fsS https://starship.rs/install.sh | bash -s -- -y >/dev/null
+type -p starship >/dev/null || curl -fsS https://starship.rs/install.sh | bash -s -- -y >/dev/null
 
 # install rust
 #type -p rustup >/dev/null && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -104,7 +110,7 @@ fi
 # gem install timetrap
 
 # Visual Studio Code
-if type -p code >/dev/null; then
+if ! type -p code >/dev/null; then
 	rpm --import https://packages.microsoft.com/keys/microsoft.asc
 	sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 	dnf check-update
