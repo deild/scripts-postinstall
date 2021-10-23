@@ -1,4 +1,5 @@
 # scripts-postinstall
+[![Shellcheck](https://github.com/deild/scripts-postinstall/actions/workflows/lint.yml/badge.svg?branch=main&event=push)](https://github.com/deild/scripts-postinstall/actions/workflows/lint.yml) [![MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 ## Fedora Workstation 
 
