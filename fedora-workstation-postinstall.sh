@@ -84,7 +84,11 @@ fi
 type -p starship >/dev/null || curl -fsS https://starship.rs/install.sh | bash -s -- -y >/dev/null
 
 # install rust
-#type -p rustup >/dev/null && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+if type -p ruspup >/dev/null ; then
+	rustup upgrade
+else
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
 
 # install go
 if [ ! -f /usr/local/go/bin/go ]; then

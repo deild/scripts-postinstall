@@ -45,15 +45,15 @@ if [ -f /usr/share/bash-completion/completions/tmux ]; then
 fi
 
 # Cockpit
-
-if [[ "$cockpit" -eq "1" ]]
-then
-	dnf install --nogpgcheck -y cockpit
-	dnf install --nogpgcheck -y cockpit-networkmanager cockpit-selinux cockpit-dashboard cockpit-system cockpit-storaged
-	systemctl enable cockpit.socket
-	systemctl start cockpit.socket
-	firewall-cmd --add-service=cockpit --permanent
-	firewall-cmd --reload
+if [[ ! -f /run/cockpit/motd ]]; then
+	if [[ "$cockpit" -eq "1" ]]; then
+		dnf install --nogpgcheck -y cockpit
+		dnf install --nogpgcheck -y cockpit-networkmanager cockpit-selinux cockpit-system cockpit-storaged
+		systemctl enable cockpit.socket
+		systemctl start cockpit.socket
+		firewall-cmd --add-service=cockpit --permanent
+		firewall-cmd --reload
+	fi
 fi
 # Git exstra and toolbelt
 if [ ! -f /usr/local/bin/git-cleave ]; then
@@ -76,7 +76,11 @@ type -p starship >/dev/null || curl -fsS https://starship.rs/install.sh | bash -
 
 
 # install rust
-type -p ruspup >/dev/null || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+if type -p ruspup >/dev/null ; then
+	rustup upgrade
+else
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
 
 # install go
 if [ ! -f /usr/local/go/bin/go ]; then
