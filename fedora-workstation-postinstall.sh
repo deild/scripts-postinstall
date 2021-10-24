@@ -117,4 +117,15 @@ if ! type -p code >/dev/null; then
 	dnf install -y code
 fi
 
+# { Balena Etcher
+# Add Etcher rpm repository:
+curl -1sLf 'https://dl.cloudsmith.io/public/balena/etcher/setup.rpm.sh' | bash
+# Update and install:
+dnf install -y balena-etcher-electron
+# Uninstall
+# sudo dnf remove -y balena-etcher-electron
+# rm /etc/yum.repos.d/balena-etcher.repo
+# rm /etc/yum.repos.d/balena-etcher-source.repo
+# }
+
 echo "Preparation completed, it is recommended to restart!"
