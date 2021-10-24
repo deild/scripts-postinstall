@@ -2,7 +2,7 @@
 set -o pipefail
 
 # List of additional software to install
-addsoftwares=(vim tar git tmux ncdu htop lshw gnome-tweak-tool vlc)
+addsoftwares=(vim tar git tmux ncdu htop lshw gnome-tweak-tool vlc openfortivpn)
 # List of additional development software to install
 adddev=(ShellCheck git-extras pass)
 # 0/1 : Désactiver le parefeu firewalld

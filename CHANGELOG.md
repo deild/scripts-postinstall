@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
-- add Balena Etcher package repository and install
+- add OpenFortiVPN in Fedora
+- add Balena Etcher package repository and install in Fedora
 
 ### Deprecated
 - Raspberry Pi OS Server
