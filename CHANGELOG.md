@@ -5,9 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.2] - 2021-10-24
 ### Added
 - add OpenFortiVPN in Fedora
 - add Balena Etcher package repository and install in Fedora
+
+### Changed
+- fix Rocky Server script
+  - rustup
+  - cockpit
 
 ### Deprecated
 - Raspberry Pi OS Server
