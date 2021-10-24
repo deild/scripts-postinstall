@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Deprecated
+- Raspberry Pi OS Server
+- Debian Desktop
 
 ## [0.1.1] - 2021-10-23
 ### Added
@@ -27,7 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - disable cockpit in desktop post-install
 
-## [0.1.0] - 2021-10-16
+## 0.1.0 - 2021-10-16 [YANKED]
 ### Added
 - Rocky Linux Desktop and Server post-install script
 - Raspberry Pi OS post-install script

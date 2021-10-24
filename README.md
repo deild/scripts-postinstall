@@ -5,11 +5,6 @@
 
 ```sh
 curl -fSs https://github.com/deild/scripts-postinstall/raw/main/fedora-workstation-postinstall.sh | bash
-
-## Raspberry Pi OS Server
-
-```sh
-curl -fSs https://github.com/deild/scripts-postinstall/raw/main/raspberrypios-server-postinstall.sh | bash
 ```
 
 ## Rocky Linux Server 
@@ -24,7 +19,13 @@ curl -fSs https://github.com/deild/scripts-postinstall/raw/main/rockylinux-serve
 curl -fSs https://github.com/deild/scripts-postinstall/raw/main/rockylinux-desktop-postinstall.sh | bash
 ```
 
-## Debian Family Desktop 
+## [Not Maintained] Raspberry Pi OS Server
+
+```sh
+curl -fSs https://github.com/deild/scripts-postinstall/raw/main/raspberrypios-server-postinstall.sh | bash
+```
+
+## [Not Maintained] Debian Family Desktop 
 
 ```sh
 curl -fSs https://github.com/deild/scripts-postinstall/raw/main/debian-desktop-postinstall.sh | bash
