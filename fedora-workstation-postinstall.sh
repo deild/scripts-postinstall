@@ -132,4 +132,9 @@ dnf install -y balena-etcher-electron
 # rm /etc/yum.repos.d/balena-etcher-source.repo
 # }
 
+
+if [ ! "vm.swappiness = 1" = "$(sudo sysctl vm.swappiness)" ]; then
+	sudo echo "vm.swappiness = 1" >> /etc/sysctl.d/01-swapp.conf
+fi
+
 echo "Preparation completed, it is recommended to restart!"
