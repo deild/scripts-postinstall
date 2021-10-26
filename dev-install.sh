@@ -9,7 +9,7 @@ sudo dnf install -y brave-browser
 # avoir au préalable modifier le profil pour avoir généré un fichier de conf
 sudo dnf install -y dconf util-linux GConf2
 git clone --single-branch --branch master --depth 1 https://github.com/arcticicestudio/nord-gnome-terminal.git
-cd nord-gnome-terminal/src/sh
+cd nord-gnome-terminal/src/sh || exit 2
 GCONFTOOL=gconftool-2 ./nord.sh -l 3
 sudo dnf remove dconf util-linux GConf2
 

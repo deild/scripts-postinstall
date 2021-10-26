@@ -31,6 +31,8 @@ curl -fSs https://github.com/deild/scripts-postinstall/raw/main/raspberrypios-se
 curl -fSs https://github.com/deild/scripts-postinstall/raw/main/debian-desktop-postinstall.sh | bash
 ```
 
-## motd
+## Miscellaneous
 
 See [dynmotd](https://github.com/deild/dynmotd)
+
+See [Others tools and config](https://github.com/deild/scripts-postinstall/wiki)

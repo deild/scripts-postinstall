@@ -50,7 +50,7 @@ fi
 
 # Git exstra and toolbelt
 if [ ! -f /usr/local/bin/git-cleave ]; then
-	git clone --depth 1 --single-branch --branch v1.7.0 https://github.com/nvie/git-toolbelt > /dev/null
+	git clone --depth 1 --single-branch --branch v1.7.0 https://github.com/nvie/git-toolbelt >/dev/null
 	cp git-toolbelt/git-* /usr/local/bin
 	rm -r git-toolbelt
 fi
@@ -84,7 +84,7 @@ fi
 type -p starship >/dev/null || curl -fsS https://starship.rs/install.sh | bash -s -- -y >/dev/null
 
 # install rust
-if type -p ruspup >/dev/null ; then
+if type -p ruspup >/dev/null; then
 	rustup upgrade
 else
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -113,28 +113,29 @@ fi
 # add gems
 # gem install timetrap
 
-# Visual Studio Code
-if ! type -p code >/dev/null; then
-	rpm --import https://packages.microsoft.com/keys/microsoft.asc
-	sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-	dnf check-update
-	dnf install -y code
+if [ ! "vm.swappiness = 1" = "$(sudo sysctl vm.swappiness)" ]; then
+	echo "vm.swappiness = 1" >>/etc/sysctl.d/01-swapp.conf
+	sysctl --load /etc/sysctl.d/01-swapp.conf
 fi
 
-# { Balena Etcher
-# Add Etcher rpm repository:
-curl -1sLf 'https://dl.cloudsmith.io/public/balena/etcher/setup.rpm.sh' | bash
-# Update and install:
-dnf install -y balena-etcher-electron
-# Uninstall
-# sudo dnf remove -y balena-etcher-electron
-# rm /etc/yum.repos.d/balena-etcher.repo
-# rm /etc/yum.repos.d/balena-etcher-source.repo
-# }
-
-
-if [ ! "vm.swappiness = 1" = "$(sudo sysctl vm.swappiness)" ]; then
-	sudo echo "vm.swappiness = 1" >> /etc/sysctl.d/01-swapp.conf
+if [ ! "net.ipv6.conf.all.disable_ipv6 = 1" = "$(sudo sysctl net.ipv6.conf.all.disable_ipv6)" ]; then
+	# désactivation de ipv6 pour toutes les interfaces
+	# désactivation de l’auto configuration pour toutes les interfaces
+	echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.d/02-ipv6-disable.conf
+	echo "net.ipv6.conf.all.autoconf = 0" >>/etc/sysctl.d/02-ipv6-disable.conf
+	sysctl --load /etc/sysctl.d/02-ipv6-disable.conf
+fi
+if [ ! "net.ipv6.conf.default.disable_ipv6 = 1" = "$(sudo net.ipv6.conf.default.disable_ipv6)" ]; then
+	# désactivation de ipv6 pour les nouvelles interfaces (ex:si ajout de carte réseau)
+	# désactivation de l’auto configuration pour les nouvelles interfaces
+	echo "net.ipv6.conf.default.disable_ipv6 = 1" >>/etc/sysctl.d/02-ipv6-disable.conf
+	echo "net.ipv6.conf.default.autoconf = 0" >>/etc/sysctl.d/02-ipv6-disable.conf
+	sysctl --load /etc/sysctl.d/02-ipv6-disable.conf
+fi
+if [ ! "net.ipv6.conf.lo.disable_ipv6 = 1" = "$(sudo sysctl net.ipv6.conf.lo.disable_ipv6)" ]; then
+	echo "net.ipv6.conf.lo.disable_ipv6 = 1" >>/etc/sysctl.d/02-ipv6-disable.conf
+	echo "net.ipv6.conf.lo.autoconf = 0" >>/etc/sysctl.d/02-ipv6-disable.conf
+	sysctl --load /etc/sysctl.d/02-ipv6-disable.conf
 fi
 
 echo "Preparation completed, it is recommended to restart!"
